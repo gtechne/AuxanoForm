@@ -1,0 +1,57 @@
+// src/pages/AnswerPage.scss
+@import "../../../styles/variables.scss";
+.answer-page {
+
+  padding: 5px;
+  width: 100%;
+  overflow-x: auto;
+  
+    h2 {
+      text-align: center;
+      color: $primary-blue;
+    }
+  
+    .answers-table {
+      width: 100%;
+      border-collapse: collapse;           
+      font-size: 1.4rem;
+
+      thead {
+        border-top: 2px solid var(--light-blue);
+        border-bottom: 2px solid var(--light-blue);
+      }
+  
+      th, td {
+        vertical-align: top;
+      text-align: left;
+      padding: 8px;
+        
+      }
+  
+      th {
+        border: 1px solid #eee;
+      }
+  
+      td {
+        ul {
+          margin: 0;
+          padding-left: 1.5rem;
+          list-style: disc;
+        }
+      }
+    }
+    tr {
+      border-bottom: 1px solid #ccc;
+    }
+
+    tr:nth-child(even) {
+      background-color: #eee;
+    }
+  
+    p {
+      text-align: center;
+      font-size: 500;
+      color: $primary-blue;
+    }
+  }
+  

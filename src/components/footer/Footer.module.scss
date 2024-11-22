@@ -1,0 +1,29 @@
+.footer {
+  background-color: rgb(119, 134, 127);
+  color: #fff;
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 8rem;
+  p {
+    color: #fff;
+  }
+  a{
+    color: #fff;
+  }
+  ul{
+    display: flex 5;
+      justify-content: space-between;
+      list-style: none;
+      li {
+        margin: 0 5px;
+        a {
+          color: #fff;
+          &:hover {
+            color: rgb(0, 255, 13);
+          }
+        }
+      }
+  }
+}

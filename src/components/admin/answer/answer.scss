@@ -1,0 +1,57 @@
+// src/pages/HomePage.scss
+@import "../../../styles/variables.scss";
+.home-page {
+    padding: 2rem;
+  
+    h2 {
+      color: $primary-blue;
+      text-align: center;
+    }
+  
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+  
+      .form-group {
+        margin-bottom: 1.5rem;
+  
+        label {
+          display: flex;
+          margin-bottom: 0.5rem;
+          font-weight: bold;
+          font-size: 1.2rem;
+          font-family: 'Times New Roman', Times, serif;
+        }
+  
+        input,
+        select {
+          width: 100%;
+          padding: 0.5rem;
+          margin-bottom: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+  
+        input[type="checkbox"],
+        input[type="radio"] {
+          width: auto;
+          margin-right: 0.5rem;
+        }
+        
+      }
+  
+      button {
+        background: $primary-blue;
+        color: $white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+  
+        &:hover {
+          background: $secondary-yellow;
+        }
+      }
+    }
+  }
+  
