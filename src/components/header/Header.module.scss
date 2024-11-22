@@ -110,7 +110,7 @@ header {
       left: 0;
       width: 50%;
       height: 100vh;
-      background-color: var(--dark-blue);
+      background-color: rgb(119, 134, 127);
       padding: 1rem;
       z-index: 999;
       transform: translateX(-200%);
@@ -143,7 +143,7 @@ header {
         }
         li {
           padding: 5px 0;
-          border-bottom: 1px solid #333;
+          border-bottom: none;
           a {
             display: block;
           }
@@ -155,7 +155,7 @@ header {
         .cart {
           // display: block;
           // padding: 5px 0;
-          border-bottom: 1px solid #333;
+          border-bottom: 1px solid #e60909;
           // a {
           //   position: relative;
           //   p {
@@ -173,7 +173,7 @@ header {
             display: block;
             margin: 0;
             padding: 5px 0;
-            border-bottom: 1px solid #333;
+            border-bottom: none;
           }
         }
       }

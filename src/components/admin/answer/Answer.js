@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../../firebase/config";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { toast } from "react-toastify";
 import Card from "../../card/Card";
 import "./answer.scss";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import spinnerImg from "../../../assets/2.gif"
 const Answer = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
@@ -109,7 +109,7 @@ const Answer = () => {
   };
 
   if (loading) {
-    return <div>Loading questions...</div>;
+    return <div><img src={spinnerImg} alt="Loading..." style={{ width: "50px" }} /></div>;
   }
 
   return (

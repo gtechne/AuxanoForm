@@ -40,8 +40,6 @@
   },
   "scripts": {
     "start": "set PORT=3000 && react-scripts start",
-    "start:b": "set PORT=5001 && nodemon server.js",
-    "start:s": "concurrently \"npm run start:b\" \"npm run start:f\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -65,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^9.0.1"
   }
 }
