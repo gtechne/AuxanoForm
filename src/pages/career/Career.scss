@@ -1,85 +1,86 @@
-.working-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #17cb11, #b1fc25);
-    color: #ffffff;
-    font-family: "Arial", sans-serif;
+@import "../../styles/global.scss";
+.student-dashboard {
+  padding: 20px;
+  background-color: #f9f9f9;
+  font-family: "Arial", sans-serif;
+
+  h1 {
     text-align: center;
-    overflow: hidden;
-  
-    .animation-wrapper {
-      position: relative;
-      margin-bottom: 20px;
-  
-      .gear-icon {
-        font-size: 80px;
-        color: #ffffff;
-        animation: spin 4s linear infinite;
-  
-        &.small-gear {
-          font-size: 40px;
-          position: absolute;
-          top: 10px;
-          left: 50%;
-          transform: translateX(-50%);
-          animation: spin-reverse 2s linear infinite;
+    color: #333;
+  }
+
+  .course-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .course-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 300px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: #444;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    .chapters {
+      .chapter-dropdown {
+        margin-top: 10px;
+
+        summary {
+          cursor: pointer;
+          font-weight: bold;
+          color: #333;
+          border-bottom: 1px solid #ccc;
+          padding: 5px 0;
+
+          &:hover {
+            color: #007bff;
+          }
+        }
+
+        ul {
+          margin-top: 10px;
+          list-style: none;
+          padding-left: 0;
+
+          li {
+            margin-bottom: 8px;
+
+            button {
+              background-color: #007bff;
+              color: #fff;
+              border: none;
+              padding: 5px 10px;
+              border-radius: 5px;
+              cursor: pointer;
+              font-size: 0.9rem;
+
+              &:hover {
+                background-color: #0056b3;
+              }
+            }
+          }
         }
       }
     }
-  
-    .fade-text {
-      font-size: 5rem;
-      font-weight: bold;
-      animation: fadeIn 3s ease-in-out infinite alternate;
-    }
-  
-    .subtitle {
-      margin-top: 10px;
-      font-size: 2rem;
-      color: #eeeeee;
-      animation: slideIn 1.5s ease-out forwards;
-    }
   }
-  
-  // Animations
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @keyframes spin-reverse {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(-360deg);
-    }
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0.5;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideIn {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
+}
+

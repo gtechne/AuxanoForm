@@ -1,0 +1,44 @@
+.student-management {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+  
+    h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+  
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+  
+        span {
+          font-size: 16px;
+        }
+  
+        button {
+          padding: 5px 10px;
+          border-radius: 5px;
+          border: none;
+          cursor: pointer;
+  
+          &.activate {
+            background-color: #28a745;
+            color: white;
+          }
+  
+          &.deactivate {
+            background-color: #dc3545;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  

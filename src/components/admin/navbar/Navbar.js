@@ -24,6 +24,11 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/admin/teacher" className={activeLink}>
+              Course
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/admin/question" className={activeLink}>
               question
             </NavLink>

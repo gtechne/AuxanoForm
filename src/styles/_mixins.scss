@@ -1,0 +1,22 @@
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @mixin box-shadow {
+    box-shadow: $card-shadow;
+  }
+  
+  @mixin button-styles {
+    background-color: $button-bg;
+    color: $button-text;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background-color: darken($button-bg, 10%);
+    }
+  }
+  

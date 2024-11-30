@@ -1,0 +1,17 @@
+@import './var';
+@import './mixins';
+
+body {
+  font-family: $font-family;
+  margin: 0;
+  padding: 0;
+  background-color: $secondary-color;
+}
+
+h1, h2, h3, h4 {
+  color: $primary-color;
+}
+
+button {
+  @include button-styles;
+}

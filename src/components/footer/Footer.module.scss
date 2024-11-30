@@ -6,76 +6,61 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 30rem;
-  padding: 2rem;
+  
+  padding: 2rem;  
+}
 
-  p {
-    color: #fff;
-    font-size: 1.4rem;
-    text-align: center;
-    margin-top: 1rem;
-  }
+.footerContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
 
-  a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;  // Align icon and text in one line
-    gap: 0.5rem;  // Space between the icon and the text
-    &:hover {
-      color: rgb(0, 255, 13);
-    }
-  }
+.logoSection,
+.socialLinks {
+  flex: 1;
+  max-width: 45%;
+  text-align: center; /* Center-align content for better layout on mobile */
+}
 
-  .footerContent {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;  // Creates space between sections
 
-    .logoSection {
-      flex: 1;
-      max-width: 30%;
-      text-align: left;
 
-      .logoImage {
-        max-width: 100%;
-        height: auto;
-      }
-    }
+.socialLinks a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center; /* Align icon and text */
+  gap: 0.5rem; /* Space between the icon and text */
+  transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition effect */
+}
+.socialLinks a:hover {
+  color: rgb(0, 255, 13); /* Change the color on hover */
+  transform: scale(1.1); /* Slightly enlarge the link on hover */
+}
 
-    .socialLinks {
-      flex: 1;
-      max-width: 40%;
-      ul {
-        display: flex;
-        justify-content: space-evenly;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-
-        li {
-          margin: 0;
-        }
-      }
-    }
-  }
-
-  .footerBottom {
-    width: 100%;
-    text-align: center;
-    margin-top: 2rem;
-  }
+.footerBottom {
+  width: 100%;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 @media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem;
+  }
+
   .footerContent {
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
-  .logoSection, .socialLinks {
-    max-width: 100%;
+
+  .logoSection,
+  .socialLinks {
+    max-width: 100%; /* Expand to full width on smaller devices */
+    flex: unset;
   }
 }

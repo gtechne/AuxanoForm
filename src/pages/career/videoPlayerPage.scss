@@ -1,0 +1,113 @@
+@import "../../styles/global.scss";
+.video-player-page {
+  padding: 20px;
+  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #0073e6;
+    margin-bottom: 20px;
+  }
+
+  .video-player {
+    display: block;
+    margin: 0 auto;
+    width: 80%;           /* Set to a percentage of the container's width */
+    height: 80%;          /* Set to maintain square aspect ratio */
+    max-width: 470px;     /* Maximum size of the video player */
+    max-height: 470px;    /* Maximum size for square frame */
+    aspect-ratio: 1;      /* Ensures the video player maintains a square shape */
+    object-fit: cover;    /* Ensures video fits well within the square frame */
+    border: 2px solid #ddd;
+    border-radius: 8px;
+  }
+
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    max-width: 600px;
+
+    button {
+      background-color: #0073e6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: #005bb5;
+      }
+    }
+  }
+
+  .comments-section {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+
+      li {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #555;
+      }
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 60px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #0073e6;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+
+      &:hover {
+        background-color: #005bb5;
+      }
+    }
+  }
+}
+
+  
