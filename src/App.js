@@ -7,7 +7,7 @@ import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import NotFound from "./pages/notFound/NotFound";
 import Career from "./pages/career/Career";
 import TeacherPanel from "./components/admin/teacher/TeacherPanel";
-import StudentDashboard from "./components/admin/teacher/StudentDashboard";
+import StudentDashboard from "./pages/career/StudentDashboard";
 
 function App() {
   return (

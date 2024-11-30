@@ -136,6 +136,13 @@ useEffect(() => {
                 </NavLink>
                 </ShowOnLogin>
               </li>
+              <li>
+              <ShowOnLogin>
+                <NavLink to="/student">
+                  Course
+                </NavLink>
+                </ShowOnLogin>
+              </li>
               
             </ul>
 

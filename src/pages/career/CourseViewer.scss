@@ -1,0 +1,78 @@
+.course-viewer {
+  .course-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .chapters {
+    margin-top: 20px;
+    .chapter {
+      margin-bottom: 10px;
+      .chapter-toggle {
+        background: #f0f0f0;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+        font-weight: bold;
+        &:hover {
+          background: #ddd;
+        }
+      }
+      .videos {
+        margin-left: 20px;
+        .video-title {
+          cursor: pointer;
+          padding: 5px 0;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .video-section {
+    margin-top: 20px;
+    video {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .comments-section {
+    margin-top: 30px;
+    .comment-list {
+      margin-bottom: 20px;
+      .comment {
+        margin-bottom: 10px;
+        p {
+          margin: 0;
+        }
+        span {
+          font-size: 0.8em;
+          color: #888;
+        }
+      }
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #5c6bc0;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover {
+        background-color: #3f4f8f;
+      }
+    }
+  }
+}

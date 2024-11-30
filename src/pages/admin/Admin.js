@@ -10,6 +10,7 @@ import AnswerPage from "../../components/admin/form/Form";
 import ManageQuestions from "../../components/admin/quetion/managequestion/ManageQuestions";
 import AnswerDetailPage from "../../components/admin/answerdetails/AnswerDetailPage";
 import Teacher from "../../components/admin/teacher/Teacher";
+import TeacherPanel from "../../components/admin/teacher/TeacherPanel";
 
 const Admin = () => {
   return (
@@ -21,6 +22,7 @@ const Admin = () => {
         <Routes>
           <Route path="home" element={<Home />} />
           <Route path="teacher" element={<Teacher />} />
+          <Route path="teacherpanel" element={<TeacherPanel />} />
           <Route path="managequestion" element={<ManageQuestions />} />
           <Route path="question" element={<Question/>}/>
           <Route path="/answer-detail/:submissionId" element={<AnswerDetailPage />} />

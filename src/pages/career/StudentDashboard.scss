@@ -1,0 +1,120 @@
+.student-dashboard {
+  padding: 20px;
+  background-color: #f9f9f9;
+
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  
+  
+  .course-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .course-info h3 {
+    margin-right: 15px;
+  }
+  
+  .course-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .chapters h4 {
+    margin-top: 15px;
+    font-size: 1.2rem;
+  }
+  
+  .chapter {
+    margin-bottom: 10px;
+  }
+  
+  .chapter-toggle {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .chapter-toggle:hover {
+    background-color: #0056b3;
+  }
+  
+  .videos {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .video-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .video-title:hover {
+    text-decoration: underline;
+  }
+  
+  .course-description {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .view-course-btn {
+    margin-top: 15px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .view-course-btn:hover {
+    background-color: #218838;
+  }
+  
+  .back-btn {
+    margin-top: 20px;
+    background-color: #ffc107;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .back-btn:hover {
+    background-color: #e0a800;
+  }
+  
+}
+
