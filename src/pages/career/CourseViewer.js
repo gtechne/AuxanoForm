@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase/config";
 import { collection, doc, getDoc, addDoc, updateDoc, onSnapshot } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { selectUserName, selectUserID } from "../../redux/slice/authSlice";
 import "./CourseViewer.scss";
 
-const CourseViewer = ({ courseId, chapterIndex, videoIndex, userId }) => {
+const CourseViewer = ({ courseId, chapterIndex, videoIndex }) => {
   const [course, setCourse] = useState(null);
   const [currentVideo, setCurrentVideo] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [newReply, setNewReply] = useState("");
   const [selectedComment, setSelectedComment] = useState(null);
-  const [isCourseCompleted, setIsCourseCompleted] = useState(false); // Track course completion status
+  const [isVideoCompleted, setIsVideoCompleted] = useState(false);
+
+  const userName = useSelector(selectUserName);
+  const userId = useSelector(selectUserID);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -18,15 +23,7 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex, userId }) => {
       setCourse(courseDoc.data());
     };
 
-    const unsubscribe = onSnapshot(
-      collection(db, "courses", courseId, "comments"),
-      (snapshot) => {
-        setComments(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      }
-    );
-
     fetchCourse();
-    return () => unsubscribe();
   }, [courseId]);
 
   useEffect(() => {
@@ -37,107 +34,108 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex, userId }) => {
     }
   }, [course, chapterIndex, videoIndex]);
 
-  // Fetch completion status from Firestore
   useEffect(() => {
-    const fetchCompletionStatus = async () => {
-      const userProgressDoc = doc(db, "user_progress", userId, "courses", courseId);
-      const userProgressSnap = await getDoc(userProgressDoc);
-      if (userProgressSnap.exists()) {
-        setIsCourseCompleted(userProgressSnap.data().completed);
-      }
-    };
+    if (currentVideo) {
+      const commentPath = `courses/${courseId}/comments/${chapterIndex}/${videoIndex}`;
+      const unsubscribe = onSnapshot(collection(db, commentPath), (snapshot) => {
+        setComments(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      });
 
-    if (userId) {
-      fetchCompletionStatus();
+      return () => unsubscribe();
     }
-  }, [userId, courseId]);
+  }, [currentVideo, courseId, chapterIndex, videoIndex]);
 
   const handleCommentSubmit = async () => {
-    await addDoc(collection(db, `courses/${courseId}/comments`), {
+    if (!newComment.trim()) return;
+    const commentPath = `courses/${courseId}/comments/${chapterIndex}/${videoIndex}`;
+    await addDoc(collection(db, commentPath), {
       text: newComment,
       createdAt: new Date(),
-      author: "Student", // Replace with logged-in user info
+      author: userName,
       replies: [],
       likes: 0,
-      dislikes: 0
+      dislikes: 0,
     });
     setNewComment("");
   };
 
   const handleReplySubmit = async () => {
-    const commentRef = doc(db, "courses", courseId, "comments", selectedComment.id);
-    await addDoc(collection(commentRef, "replies"), {
-      text: newReply,
-      createdAt: new Date(),
-      author: "Student",
-    });
+    const commentRef = doc(db, `courses/${courseId}/comments/${chapterIndex}/${videoIndex}`, selectedComment.id);
+    const commentDoc = await getDoc(commentRef);
+    const updatedReplies = [...(commentDoc.data().replies || []), { text: newReply, author: userName, createdAt: new Date() }];
+
+    await updateDoc(commentRef, { replies: updatedReplies });
     setNewReply("");
     setSelectedComment(null);
   };
 
-  const handleLike = async (commentId) => {
-    const commentRef = doc(db, "courses", courseId, "comments", commentId);
+  const handleReact = async (commentId, type) => {
+    const commentRef = doc(db, `courses/${courseId}/comments/${chapterIndex}/${videoIndex}`, commentId);
     const commentDoc = await getDoc(commentRef);
-    const updatedLikes = commentDoc.data().likes + 1;
+    const updatedReactions = { likes: commentDoc.data().likes || 0, dislikes: commentDoc.data().dislikes || 0 };
+    updatedReactions[type] += 1;
 
-    await updateDoc(commentRef, { likes: updatedLikes });
+    await updateDoc(commentRef, updatedReactions);
   };
 
-  const handleDislike = async (commentId) => {
-    const commentRef = doc(db, "courses", courseId, "comments", commentId);
-    const commentDoc = await getDoc(commentRef);
-    const updatedDislikes = commentDoc.data().dislikes + 1;
-
-    await updateDoc(commentRef, { dislikes: updatedDislikes });
-  };
-
-  // Mark course as completed
-  const handleMarkAsCompleted = async () => {
+  const handleVideoEnd = async () => {
+    setIsVideoCompleted(true);
     const userProgressDoc = doc(db, "user_progress", userId, "courses", courseId);
-    await updateDoc(userProgressDoc, { completed: true });
-    setIsCourseCompleted(true); // Update local state for UI
+    const progressSnap = await getDoc(userProgressDoc);
+
+    if (progressSnap.exists()) {
+      await updateDoc(userProgressDoc, {
+        completedVideos: [...progressSnap.data().completedVideos, `${chapterIndex}_${videoIndex}`],
+      });
+    } else {
+      await addDoc(collection(db, "user_progress", userId, "courses"), {
+        completedVideos: [`${chapterIndex}_${videoIndex}`],
+        courseId,
+      });
+    }
+
+    // Automatically move to the next video
+    if (videoIndex < course.chapters[chapterIndex].videos.length - 1) {
+      setCurrentVideo(course.chapters[chapterIndex].videos[videoIndex + 1]);
+    } else if (chapterIndex < course.chapters.length - 1) {
+      setCurrentVideo(course.chapters[chapterIndex + 1].videos[0]);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (videoIndex > 0) {
+      setCurrentVideo(course.chapters[chapterIndex].videos[videoIndex - 1]);
+    } else if (chapterIndex > 0) {
+      setCurrentVideo(course.chapters[chapterIndex - 1].videos[course.chapters[chapterIndex - 1].videos.length - 1]);
+    }
+  };
+
+  const handleNext = () => {
+    if (videoIndex < course.chapters[chapterIndex].videos.length - 1) {
+      setCurrentVideo(course.chapters[chapterIndex].videos[videoIndex + 1]);
+    } else if (chapterIndex < course.chapters.length - 1) {
+      setCurrentVideo(course.chapters[chapterIndex + 1].videos[0]);
+    }
   };
 
   if (!course || !currentVideo) return <div>Loading...</div>;
 
   return (
     <div className="course-viewer">
-      <h1>{course.title}</h1>
-      <p>{course.description}</p>
-
+      <h1 className="course-title">{course.title}</h1>
       <div className="video-section">
         <h2>{currentVideo.title}</h2>
         <div className="video-container">
-          <video src={currentVideo.videoURL} controls />
+          <video
+            src={currentVideo.videoURL}
+            controls
+            onEnded={handleVideoEnd}
+            className="responsive-video"
+          />
         </div>
-        <div className="navigation">
-          {chapterIndex > 0 && (
-            <button
-              onClick={() => {
-                const prevChapter = course.chapters[chapterIndex - 1];
-                const prevVideoIndex = prevChapter.videos.length - 1;
-                setCurrentVideo(prevChapter.videos[prevVideoIndex]);
-              }}
-            >
-              Previous
-            </button>
-          )}
-
-          {chapterIndex < course.chapters.length - 1 || videoIndex < course.chapters[chapterIndex].videos.length - 1 ? (
-            <button
-              onClick={() => {
-                if (videoIndex < course.chapters[chapterIndex].videos.length - 1) {
-                  const nextVideoIndex = videoIndex + 1;
-                  setCurrentVideo(course.chapters[chapterIndex].videos[nextVideoIndex]);
-                } else if (chapterIndex < course.chapters.length - 1) {
-                  const nextChapter = course.chapters[chapterIndex + 1];
-                  setCurrentVideo(nextChapter.videos[0]);
-                }
-              }}
-            >
-              Next
-            </button>
-          ) : null}
+        <div className="video-navigation">
+          <button onClick={handlePrevious}>Previous</button>
+          <button onClick={handleNext}>Next</button>
         </div>
       </div>
 
@@ -149,20 +147,10 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex, userId }) => {
               <p>{comment.text}</p>
               <span>by {comment.author}</span>
               <div className="comment-actions">
-                <button onClick={() => handleLike(comment.id)}>Like ({comment.likes})</button>
-                <button onClick={() => handleDislike(comment.id)}>Dislike ({comment.dislikes})</button>
+                <button onClick={() => handleReact(comment.id, "likes")}>Like ({comment.likes})</button>
+                <button onClick={() => handleReact(comment.id, "dislikes")}>Dislike ({comment.dislikes})</button>
                 <button onClick={() => setSelectedComment(comment)}>Reply</button>
               </div>
-              {selectedComment && selectedComment.id === comment.id && (
-                <div className="reply-section">
-                  <textarea
-                    value={newReply}
-                    onChange={(e) => setNewReply(e.target.value)}
-                    placeholder="Write a reply..."
-                  />
-                  <button onClick={handleReplySubmit}>Post Reply</button>
-                </div>
-              )}
               {comment.replies && (
                 <div className="replies">
                   {comment.replies.map((reply, index) => (
@@ -171,6 +159,16 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex, userId }) => {
                       <span>by {reply.author}</span>
                     </div>
                   ))}
+                </div>
+              )}
+              {selectedComment && selectedComment.id === comment.id && (
+                <div className="reply-section">
+                  <textarea
+                    value={newReply}
+                    onChange={(e) => setNewReply(e.target.value)}
+                    placeholder="Write a reply..."
+                  />
+                  <button onClick={handleReplySubmit}>Post Reply</button>
                 </div>
               )}
             </div>
@@ -184,15 +182,9 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex, userId }) => {
         <button onClick={handleCommentSubmit}>Post Comment</button>
       </div>
 
-      {!isCourseCompleted && (
-        <button className="mark-completed" onClick={handleMarkAsCompleted}>
-          Mark as Completed
-        </button>
-      )}
-
-      {isCourseCompleted && (
+      {isVideoCompleted && (
         <div className="completion-message">
-          <p>You have successfully completed this course!</p>
+          <p>You have successfully completed this video!</p>
         </div>
       )}
     </div>

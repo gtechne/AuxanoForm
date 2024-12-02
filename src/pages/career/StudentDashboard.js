@@ -29,43 +29,56 @@ const StudentDashboard = () => {
   };
 
   const renderCourseList = () => (
-    <ul>
+    <ul className="course-list">
       {courses.map((course) => (
-        <li key={course.id}>
+        <li key={course.id} className="course-item">
           <div className="course-info">
             <h3>{course.title}</h3>
-            <img src={course.image} alt={course.title} className="course-image" />
+            {/* Ensure the imageURL is accessed correctly */}
+            {course.imageURL ? (
+              <img
+                src={course.imageURL}
+                alt={course.title}
+                className="course-image"
+              />
+            ) : (
+              <div className="placeholder-image">No Image Available</div>
+            )}
           </div>
 
           <div className="chapters">
             <h4>Chapters</h4>
             {course.chapters.map((chapter, index) => (
-              <div key={index} className="chapter">
-                <button
+              <details key={index} className="chapter">
+                <summary
                   className="chapter-toggle"
                   onClick={() =>
-                    setSelectedChapterIndex(selectedChapterIndex === index ? null : index)
+                    setSelectedChapterIndex(
+                      selectedChapterIndex === index ? null : index
+                    )
                   }
                 >
                   {chapter.chapterTitle}
-                </button>
+                </summary>
                 {selectedChapterIndex === index && (
                   <div className="videos">
                     {chapter.videos.map((video, videoIndex) => (
                       <div
                         key={videoIndex}
                         className="video-title"
-                        onClick={() => handleVideoClick(course.id, index, videoIndex)}
+                        onClick={() =>
+                          handleVideoClick(course.id, index, videoIndex)
+                        }
                       >
                         <p>{video.title}</p>
                       </div>
                     ))}
                   </div>
                 )}
-              </div>
+              </details>
             ))}
           </div>
-
+          <h4>Description</h4>
           <p className="course-description">{course.description}</p>
 
           <button

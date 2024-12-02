@@ -23,11 +23,7 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/admin/teacher" className={activeLink}>
-              Course
-            </NavLink>
-          </li>
+          
           <li>
             <NavLink to="/admin/teacherpanel" className={activeLink}>
               Course
