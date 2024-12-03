@@ -162,6 +162,8 @@ const handleReplySubmit = async () => {
           onEnded={handleVideoEnd}
           className="responsive-video"
           ref={videoRef}
+          controlsList="nodownload" // Prevent video download
+      onContextMenu={(e) => e.preventDefault()} // Disable right-click
         />
          <div className="video-controls">
               <button onClick={handleBackward}>⏪ Backward 10s</button>
