@@ -96,40 +96,7 @@ const handleReplySubmit = async () => {
   setSelectedComment(null);  // Close the reply section
 };
 
-  const handleReact = async (commentId, type) => {
-    const commentRef = doc(db, `courses/${courseId}/comments/${chapterIndex}/${videoIndex}`, commentId);
-    const commentDoc = await getDoc(commentRef);
-
-    if (commentDoc.exists()) {
-      const data = commentDoc.data();
-      let updatedReactions = {
-        likes: data.likes || 0,
-        dislikes: data.dislikes || 0,
-        reactedUsers: data.reactedUsers || {},
-      };
-
-      if (!updatedReactions.reactedUsers[userId]) {
-        updatedReactions.reactedUsers[userId] = null;
-      }
-
-      if (updatedReactions.reactedUsers[userId] === type) {
-        updatedReactions[type] -= 1;
-        updatedReactions.reactedUsers[userId] = null;
-      } else {
-        if (updatedReactions.reactedUsers[userId] !== null) {
-          updatedReactions[updatedReactions.reactedUsers[userId]] -= 1;
-        }
-        updatedReactions[type] += 1;
-        updatedReactions.reactedUsers[userId] = type;
-      }
-
-      await updateDoc(commentRef, {
-        likes: updatedReactions.likes,
-        dislikes: updatedReactions.dislikes,
-        reactedUsers: updatedReactions.reactedUsers,
-      });
-    }
-  };
+  
 
   const handleVideoEnd = async () => {
     setIsVideoCompleted(true);
@@ -213,8 +180,7 @@ const handleReplySubmit = async () => {
       </div>
       <p>{comment.text}</p>
       <div className="comment-actions">
-        <button onClick={() => handleReact(comment.id, "likes")}>👍 {comment.likes}</button>
-        <button onClick={() => handleReact(comment.id, "dislikes")}>👎 {comment.dislikes}</button>
+        
         <button onClick={() => setSelectedComment(comment)}>Reply</button>
       </div>
 
