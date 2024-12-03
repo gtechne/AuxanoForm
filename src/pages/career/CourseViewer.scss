@@ -52,7 +52,28 @@
         }
       }
     }
+    .video-controls {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      display: flex;
+      gap: 10px;
     
+      .control-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+    
+        
 
     .navigation {
       display: flex;

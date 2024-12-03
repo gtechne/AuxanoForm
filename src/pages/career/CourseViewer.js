@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db } from "../../firebase/config";
 import { collection, doc, getDoc, addDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { useSelector } from "react-redux";
@@ -16,6 +16,7 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex }) => {
 
   const userName = useSelector(selectUserName);
   const userId = useSelector(selectUserID);
+  const videoRef = useRef(null); // Reference to the video element
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -31,19 +32,17 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex }) => {
       const currentChapter = course.chapters[chapterIndex];
       const video = currentChapter?.videos[videoIndex];
       setCurrentVideo(video);
-    }
-  }, [course, chapterIndex, videoIndex]);
 
-  useEffect(() => {
-    if (currentVideo) {
+      // Fetch the comments for the current video
       const commentPath = `courses/${courseId}/comments/${chapterIndex}/${videoIndex}`;
       const unsubscribe = onSnapshot(collection(db, commentPath), (snapshot) => {
         setComments(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
       });
 
+      // Cleanup function to unsubscribe from the comments when video changes
       return () => unsubscribe();
     }
-  }, [currentVideo, courseId, chapterIndex, videoIndex]);
+  }, [course, chapterIndex, videoIndex, courseId]);
 
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) return;
@@ -118,6 +117,18 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex }) => {
     }
   };
 
+  const handleForward = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime += 10; // Forward 10 seconds
+    }
+  };
+
+  const handleBackward = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime -= 10; // Backward 10 seconds
+    }
+  };
+
   if (!course || !currentVideo) return <div>Loading...</div>;
 
   return (
@@ -131,7 +142,13 @@ const CourseViewer = ({ courseId, chapterIndex, videoIndex }) => {
             controls
             onEnded={handleVideoEnd}
             className="responsive-video"
+            controlsList="nodownload"
+            ref={videoRef}
           />
+          <div className="video-controls">
+            <button onClick={handleBackward}>⏪ Backward 10s</button>
+            <button onClick={handleForward}>⏩ Forward 10s</button>
+          </div>
         </div>
         <div className="video-navigation">
           <button onClick={handlePrevious}>Previous</button>
