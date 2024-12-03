@@ -27,6 +27,9 @@ const StudentDashboard = () => {
     setSelectedCourseId(courseId);
     setSelectedVideoId({ chapterIndex, videoIndex });
   };
+  const handleVideoChange = (chapterIdx, videoIdx) => {
+    setSelectedVideoId({ chapterIndex: chapterIdx, videoIndex: videoIdx });
+  };
 
   const renderCourseList = () => (
     <ul className="course-list">
@@ -104,6 +107,7 @@ const StudentDashboard = () => {
             courseId={selectedCourseId}
             chapterIndex={selectedVideoId.chapterIndex}
             videoIndex={selectedVideoId.videoIndex}
+            onVideoChange={handleVideoChange}
           />
         </div>
       ) : (

@@ -129,13 +129,7 @@ useEffect(() => {
                   Home
                 </NavLink>
               </li>
-              <li>
-              <ShowOnLogin>
-                <NavLink to="/career">
-                  Class
-                </NavLink>
-                </ShowOnLogin>
-              </li>
+              
               <li>
               <ShowOnLogin>
                 <NavLink to="/student">
