@@ -1,6 +1,6 @@
 import React from "react";
 import AddCourseForm from "./AddCourseForm";
-import StudentManagement from "../student/StudentManagement";
+
 import "./TeacherPanel.scss";
 
 const TeacherPanel = () => {
@@ -9,7 +9,7 @@ const TeacherPanel = () => {
       <h1>Teacher Panel</h1>
       
       <AddCourseForm />
-      <StudentManagement />
+      
     </div>
   );
 };

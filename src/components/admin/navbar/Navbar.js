@@ -18,20 +18,21 @@ const Navbar = () => {
       </div>
       <nav>
         <ul>
-          <li>
-            <NavLink to="/admin/home" className={activeLink}>
-              Home
-            </NavLink>
-          </li>
+          
           
           <li>
             <NavLink to="/admin/teacherpanel" className={activeLink}>
-              Course
+             Add Course
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/admin/coursemanagement" className={activeLink}>
+              Course Management
             </NavLink>
           </li>
           <li>
             <NavLink to="/admin/question" className={activeLink}>
-              question
+              Set Question
             </NavLink>
           </li>
           <li>
