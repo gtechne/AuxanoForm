@@ -39,17 +39,7 @@ const Login = () => {
 
  // Login with Goooglr
  const provider = new GoogleAuthProvider();
- const signInWithGoogle = () => {
-   signInWithPopup(auth, provider)
-     .then((result) => {
-       //const user = result.user;
-       toast.success("Login Successfully");
-       navigate("/") 
-     })
-     .catch((error) => {
-       toast.error(error.message);
-     });
- };
+ 
   return (
     <>
     {isLoading && <Loader />}
@@ -83,14 +73,11 @@ const Login = () => {
             <div className={styles.links}>
               <Link to="/reset">Reset Password</Link>
             </div>
-            <p>-- or --</p>
+            
           </form>
-          <button
-            className="--btn --btn-danger --btn-block"
-            onClick={signInWithGoogle}
-          >
-            <FaGoogle color="#fff" /> Login With Google
-          </button>
+          
+            
+          
           <span className={styles.register}>
             <p>Don't have an account?</p>
             <Link to="/register">Register</Link>

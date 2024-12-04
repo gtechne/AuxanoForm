@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./auth.module.scss";
 import registerImg from "../../assets/register.png";
 import Card from "../../components/card/Card";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
@@ -18,12 +18,23 @@ const Register = () => {
 
   const registerUser = (e) => {
     e.preventDefault();
+
+    // Check if the email matches the required domain or the admin email
+    const domain = "@auxanosolar.com";
+    const adminEmail = "adminauxano@gmail.com";
+    if (!email.endsWith(domain) && email !== adminEmail) {
+      toast.error(`Email must be from ${domain} or be the admin email.`);
+      return;
+    }
+
+    // Check if passwords match
     if (password !== cPassword) {
       toast.error("Passwords do not match.");
+      return;
     }
 
     setIsLoading(true);
-    
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -40,7 +51,6 @@ const Register = () => {
 
   return (
     <>
-      
       {isLoading && <Loader />}
 
       <section className={`container ${styles.auth}`}>
@@ -76,7 +86,7 @@ const Register = () => {
             </form>
 
             <span className={styles.register}>
-              <p>Already an account?</p>
+              <p>Already have an account?</p>
               <Link to="/login">Login</Link>
             </span>
           </div>
